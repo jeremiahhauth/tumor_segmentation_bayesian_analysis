@@ -14,7 +14,7 @@
 
 
 
-#SBATCH --output=/home/%u/tumor_segmentation_files/model_6_layer_2/%x-%j.log
+#SBATCH --output=/home/%u/tumor_segmentation_files/model_6_layer_3/%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
 
