@@ -18,4 +18,4 @@
 
 # The application(s) to execute along with its input arguments and options:
 
-python ./Layer_2_Bayesian.py
+python ./Layer_3_Bayesian.py
