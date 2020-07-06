@@ -1,0 +1,2 @@
+model_checkpoint_path: "layer_1_bayesian"
+all_model_checkpoint_paths: "layer_1_bayesian"
