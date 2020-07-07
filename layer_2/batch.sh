@@ -10,11 +10,11 @@
 #SBATCH --ntasks-per-node=32
 #SBATCH --mem-per-cpu=7g
 #SBATCH --time=24:00:00
-#SBATCH --gpus=4
+#SBATCH --gpus=3
 
 
 
-#SBATCH --output=/home/%u/tumor_segmentation_files/model_6_layer_2/%x-%j.log
+#SBATCH --output=/home/%u/tumor_segmentation_bayesian_analysis/layer_2/%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
 
