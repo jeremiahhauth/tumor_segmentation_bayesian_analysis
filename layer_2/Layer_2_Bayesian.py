@@ -170,16 +170,16 @@ with mirrored_strategy.scope():
 # In[6]:
 
 
-bias_prior = model.layers[1].bias_prior
-bias_posterior = model.layers[1].bias_posterior
-kernel_prior = model.layers[1].kernel_prior
-kernel_posterior = model.layers[1].kernel_posterior
+# bias_prior = model.layers[1].bias_prior
+# bias_posterior = model.layers[1].bias_posterior
+# kernel_prior = model.layers[1].kernel_prior
+# kernel_posterior = model.layers[1].kernel_posterior
 
 
 # In[7]:
 
 
-print('KL Divergence at Initialization:', '%0.3f' % (tfp.distributions.kl_divergence(bias_posterior, bias_prior)       + tfp.distributions.kl_divergence(kernel_posterior, kernel_prior)).numpy())
+# print('KL Divergence at Initialization:', '%0.3f' % (tfp.distributions.kl_divergence(bias_posterior, bias_prior)       + tfp.distributions.kl_divergence(kernel_posterior, kernel_prior)).numpy())
 
 
 # In[8]:
