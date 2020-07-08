@@ -14,8 +14,8 @@
 
 
 
-#SBATCH --output=/home/%u/tumor_segmentation_files/model_6_layer_1/%x-%j.log
+#SBATCH --output=/home/%u/tumor_segmentation_files/layer_1a/%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
 
-python ./layer_1a_Bayesian.py
+python ./layer_1a_bayesian.py
