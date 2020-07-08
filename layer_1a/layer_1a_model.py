@@ -17,7 +17,7 @@ def make_model():
 
     def likelihood_loss(y, y_pred):
         return sum_binary_crossentropy(y, y_pred)
-    
+
     posterior_fn = tfp.layers.default_mean_field_normal_fn(
               loc_initializer=tf.random_normal_initializer(
                   mean=PRIOR_MU, stddev=0.05),
@@ -30,7 +30,7 @@ def make_model():
                       untransformed_scale_initializer=tf.random_normal_initializer(
                           mean=np.log(np.exp(PRIOR_SIGMA) - 1), stddev=0))
 
-    flipout_params = dict(kernel_size=(3, 3), activation="relu", padding="same", 
+    flipout_params = dict(kernel_size=(3, 3), activation="relu", padding="same",
                   kernel_prior_fn=prior_fn,
                   bias_prior_fn=prior_fn,
                   kernel_posterior_fn=posterior_fn,
@@ -38,15 +38,23 @@ def make_model():
                   kernel_divergence_fn=None,
                   bias_divergence_fn=None)
 
-    params_final = dict(kernel_size=(1, 1), activation="sigmoid", padding="same", 
-                      data_format="channels_last",
-                  kernel_initializer="he_uniform")
+    flipout_params_final = dict(kernel_size=(1, 1), activation="sigmoid", padding="same",
+                                kernel_prior_fn=prior_fn,
+                                bias_prior_fn=prior_fn,
+                                kernel_posterior_fn=posterior_fn,
+                                bias_posterior_fn=posterior_fn,
+                                kernel_divergence_fn=None,
+                                bias_divergence_fn=None)
+
+    params_final = dict(kernel_size=(1, 1), activation="sigmoid", padding="same",
+                        data_format="channels_last",
+                        kernel_initializer="he_uniform")
 
     params = dict(kernel_size=(3, 3), activation="relu",
                   padding="same", data_format="channels_last",
                   kernel_initializer="he_uniform")
-    
-    
+
+
     input_layer = keras.layers.Input(shape=(144, 144, 4), name="input_layer")
 
     encoder_1_a = tfp.layers.Convolution2DFlipout(FILTERS, name='encoder_1_a', **flipout_params)(input_layer)
@@ -100,7 +108,9 @@ def make_model():
     print('Input size:', input_layer.shape)
     print('Output size:', output_layer.shape)
 
-    model = keras.models.Model(inputs=input_layer, outputs=output_layer)
+    model = keras.models.Model(inputs=input_layer, outputs=output_layer,
+                               name = 'model_' + LAYER_NAME)
+
     for layer in model.layers:
         if type(layer) == tfp.python.layers.conv_variational.Conv2DFlipout:
             layer.add_loss(KLDivergence(layer.kernel_posterior, layer.kernel_prior).call)
@@ -108,6 +118,7 @@ def make_model():
 
     model.compile(optimizer=keras.optimizers.Nadam(learning_rate=1e-4),
                   loss=likelihood_loss,
-                  metrics=[likelihood_loss, mean_binary_crossentropy])
-    
+                  metrics=[likelihood_loss, mean_binary_crossentropy],
+                  )
+
     return model
