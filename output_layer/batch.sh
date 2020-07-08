@@ -1,11 +1,9 @@
 #!/bin/bash
-export LAYER_NAME="output_layer"
-echo "LAYER_NAME: "$LAYER_NAME
 
 #SBATCH -A precisionhealth_project2
 #SBATCH -p precisionhealth
 
-#SBATCH --job-name=$LAYER_NAME
+#SBATCH --job-name=output_layer
 #SBATCH --mail-user=hauthj@umich.edu
 #SBATCH --mail-type=END
 #SBATCH --nodes=1
@@ -14,8 +12,11 @@ echo "LAYER_NAME: "$LAYER_NAME
 #SBATCH --time=24:00:00
 #SBATCH --gpus=3
 
-#SBATCH --output=/home/%u/tumor_segmentation_files/$LAYER_NAME/%x-%j.log
+
+
+#SBATCH --output=/home/%u/tumor_segmentation_bayesian_analysis/output_layer/%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
-
-python ./${LAYER_NAME}"_bayesian.py"
+export LAYER_NAME="output_layer"
+echo "LAYER_NAME: "$LAYER_NAME
+python ./output_layer_bayesian.py
