@@ -19,4 +19,4 @@
 # The application(s) to execute along with its input arguments and options:
 export LAYER_NAME="decoder_4a"
 echo "LAYER_NAME: "$LAYER_NAME
-python ./output_layer_bayesian.py
+python ./decoder_4a_bayesian.py

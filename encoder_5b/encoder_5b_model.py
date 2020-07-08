@@ -1,62 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
+from __main__ import *
 
-# ### Imports
-
-# In[11]:
-
-
-import tensorflow as tf
-import tensorflow_io as tfio
-import tensorflow_probability as tfp
-
-print(tf.__version__)
-print('Listing all GPU resources:')
-print(tf.config.experimental.list_physical_devices('GPU'))
-print()
-import tensorflow.keras as keras
-print(tfp.__version__)
-import numpy as np
-import datetime
-import time
-import matplotlib.pyplot as plt
-import pickle
-import os
-
-
-# ## Parameters
-
-# In[2]:
-
-
-BATCH_SIZE = 128
-FILTERS = 32
-EPOCHS = 200
-VERBOSE = 2
-DATA_PATH = '../data/Task01_BrainTumour.h5'
-PICKLE_PATH = 'Layer_2_hist.pkl'
-
-DATA_SIZE = 60000
-
-PRIOR_MU = 0
-PRIOR_SIGMA = 10
-
-
-# ### Data
-
-Xy_train = tf.data.Dataset.zip((tf.data.Dataset.from_tensor_slices(np.load('../data/imgs_train.npy')),
-                                tf.data.Dataset.from_tensor_slices(np.load('../data/msks_train.npy')))).cache().batch(BATCH_SIZE).prefetch(8)
-Xy_test = tf.data.Dataset.zip((tf.data.Dataset.from_tensor_slices(np.load('../data/imgs_test.npy')),
-                                tf.data.Dataset.from_tensor_slices(np.load('../data/msks_test.npy')))).cache().batch(BATCH_SIZE).prefetch(8)
-
-# ### Functions
-
-# In[5]:
-
-
-mirrored_strategy = tf.distribute.MirroredStrategy()
-
-with mirrored_strategy.scope():
+def make_model():
 
     class KLDivergence:
         def __init__(self, q_dist, p_dist):
@@ -75,10 +19,10 @@ with mirrored_strategy.scope():
         return sum_binary_crossentropy(y, y_pred)
 
     posterior_fn = tfp.layers.default_mean_field_normal_fn(
-                  loc_initializer=tf.random_normal_initializer(
-                      mean=PRIOR_MU, stddev=0.05),
-                  untransformed_scale_initializer=tf.random_normal_initializer(
-                      mean=np.log(np.exp(PRIOR_SIGMA) - 1), stddev=0.05))
+              loc_initializer=tf.random_normal_initializer(
+                  mean=PRIOR_MU, stddev=0.05),
+              untransformed_scale_initializer=tf.random_normal_initializer(
+                  mean=np.log(np.exp(PRIOR_SIGMA) - 1), stddev=0.05))
 
     prior_fn = tfp.layers.default_mean_field_normal_fn(
                       loc_initializer=tf.random_normal_initializer(
@@ -94,9 +38,17 @@ with mirrored_strategy.scope():
                   kernel_divergence_fn=None,
                   bias_divergence_fn=None)
 
+    flipout_params_final = dict(kernel_size=(1, 1), activation="sigmoid", padding="same",
+                                kernel_prior_fn=prior_fn,
+                                bias_prior_fn=prior_fn,
+                                kernel_posterior_fn=posterior_fn,
+                                bias_posterior_fn=posterior_fn,
+                                kernel_divergence_fn=None,
+                                bias_divergence_fn=None)
+
     params_final = dict(kernel_size=(1, 1), activation="sigmoid", padding="same",
-                      data_format="channels_last",
-                  kernel_initializer="he_uniform")
+                        data_format="channels_last",
+                        kernel_initializer="he_uniform")
 
     params = dict(kernel_size=(3, 3), activation="relu",
                   padding="same", data_format="channels_last",
@@ -106,7 +58,7 @@ with mirrored_strategy.scope():
     input_layer = keras.layers.Input(shape=(144, 144, 4), name="input_layer")
 
     encoder_1_a = keras.layers.Conv2D(FILTERS, name='encoder_1_a', **params)(input_layer)
-    encoder_1_b = tfp.layers.Convolution2DFlipout(FILTERS, name='encoder_1_b', **flipout_params)(encoder_1_a)
+    encoder_1_b = keras.layers.Conv2D(FILTERS, name='encoder_1_b', **params)(encoder_1_a)
     downsample_1 = keras.layers.MaxPool2D(name='downsample_1')(encoder_1_b)
 
     encoder_2_a = keras.layers.Conv2D(FILTERS*2, name='encoder_2_a', **params)(downsample_1)
@@ -128,7 +80,7 @@ with mirrored_strategy.scope():
 
     upsample_4 = keras.layers.UpSampling2D(name='upsample_4', size=(2, 2), interpolation="bilinear")(encoder_5_b)
     concat_4 = keras.layers.concatenate([upsample_4, encoder_4_b], name='concat_4')
-    decoder_4_a = keras.layers.Conv2D(FILTERS*8, name='decoder_4_a', **params)(concat_4)
+    decoder_4_a = tfp.layers.Convolution2DFlipout(FILTERS*8, name='decoder_4_a', **flipout_params)(concat_4)
     decoder_4_b = keras.layers.Conv2D(FILTERS*8, name='decoder_4_b', **params)(decoder_4_a)
 
 
@@ -156,7 +108,9 @@ with mirrored_strategy.scope():
     print('Input size:', input_layer.shape)
     print('Output size:', output_layer.shape)
 
-    model = keras.models.Model(inputs=input_layer, outputs=output_layer)
+    model = keras.models.Model(inputs=input_layer, outputs=output_layer,
+                               name = 'model_' + LAYER_NAME)
+
     for layer in model.layers:
         if type(layer) == tfp.python.layers.conv_variational.Conv2DFlipout:
             layer.add_loss(KLDivergence(layer.kernel_posterior, layer.kernel_prior).call)
@@ -164,67 +118,7 @@ with mirrored_strategy.scope():
 
     model.compile(optimizer=keras.optimizers.Nadam(learning_rate=1e-4),
                   loss=likelihood_loss,
-                  metrics=[likelihood_loss, mean_binary_crossentropy])
+                  metrics=[likelihood_loss, mean_binary_crossentropy],
+                  )
 
-
-# In[6]:
-
-
-# bias_prior = model.layers[1].bias_prior
-# bias_posterior = model.layers[1].bias_posterior
-# kernel_prior = model.layers[1].kernel_prior
-# kernel_posterior = model.layers[1].kernel_posterior
-
-
-# In[7]:
-
-
-# print('KL Divergence at Initialization:', '%0.3f' % (tfp.distributions.kl_divergence(bias_posterior, bias_prior)       + tfp.distributions.kl_divergence(kernel_posterior, kernel_prior)).numpy())
-
-
-# In[8]:
-
-
-print(model.losses)
-
-
-# ### Train
-
-# In[9]:
-
-
-print("-" * 30)
-print("Fitting model with training data ...")
-print("-" * 30)
-
-print("Step 3, training the model started at {}".format(datetime.datetime.now()))
-start_time = time.time()
-
-history = model.fit(Xy_train,
-          validation_data=Xy_test,
-          epochs=EPOCHS, verbose=VERBOSE)
-
-print("Total time elapsed for training = {} seconds".format(time.time() - start_time))
-print("Training finished at {}".format(datetime.datetime.now()))
-
-
-# ### Save model
-
-# In[18]:
-
-
-# Save the model
-# serialize weights to HDF5 and tensorflow_model format
-model.save_weights("layer_1_bayesian.h5")
-print("Saved model to disk (.h5)")
-model.save_weights('layer_1_bayesian')
-print("Saved model to disk (.tf)")
-
-#Save history
-history_dict = history.history
-with open(PICKLE_PATH, 'wb') as file_pi:
-        pickle.dump(history_dict, file_pi)
-print('Pickled training history')
-
-
-# In[ ]:
+    return model

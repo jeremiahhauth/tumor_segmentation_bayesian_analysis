@@ -3,7 +3,7 @@
 #SBATCH -A precisionhealth_project2
 #SBATCH -p precisionhealth
 
-#SBATCH --job-name=layer_5b
+#SBATCH --job-name=encoder_5a
 #SBATCH --mail-user=hauthj@umich.edu
 #SBATCH --mail-type=END
 #SBATCH --nodes=1
@@ -14,8 +14,9 @@
 
 
 
-#SBATCH --output=/home/%u/tumor_segmentation_bayesian_analysis/layer_5b/%x-%j.log
+#SBATCH --output=$SLURM_SUBMIT_DIR/%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
-
-python ./layer_5b_bayesian.py
+export LAYER_NAME="encoder_5a"
+echo "LAYER_NAME: "$LAYER_NAME
+python ./encoder_5a_bayesian.py
