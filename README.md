@@ -32,7 +32,7 @@ Each of these layers as well as the fully bayesian model has a directory with th
 Within a layer directory, there are several files:
 - `batch.sh`  slurm script to run model training. Sets environment variable `LAYER_NAME`.
 - `LAYER_NAME_bayesian.py`  main file with training parameters
-- `LAYER_NAME_model.py` script that defines function `make_model()`.  `make_model()` recieves global variables from `LAYER_NAME_bayesian.py` and returns a compiled, untrained model.
+- `LAYER_NAME_model.py`, `make_model()` called by `LAYER_NAME_bayesian.py` and returns a compiled, untrained model.
 - `LAYER_NAME-######.log` command line output from running `LAYER_NAME_bayesian.py` via slurm
 - `LAYER_NAME_bayesian_model.h5` saved weights from a fully trained model
 - `LAYER_NAME_hist.pkl` python dict that stores metrics from training history
