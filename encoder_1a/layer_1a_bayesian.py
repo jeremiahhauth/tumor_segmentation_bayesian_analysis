@@ -1,0 +1,89 @@
+import tensorflow as tf
+import tensorflow_io as tfio
+import tensorflow_probability as tfp
+
+print(tf.__version__)
+print('Listing all GPU resources:')
+print(tf.config.experimental.list_physical_devices('GPU'))
+print()
+import tensorflow.keras as keras
+print(tfp.__version__)
+import numpy as np
+import datetime
+import time
+import matplotlib.pyplot as plt
+import pickle
+import os
+import sys
+import importlib.util
+
+
+LAYER_NAME = 'layer_1a'
+
+FILTERS = 32
+DATA_SIZE = 60000
+PRIOR_MU = 0
+PRIOR_SIGMA = 10
+
+BATCH_SIZE = 128
+EPOCHS = 200
+VERBOSE = 2
+
+MODEL_PATH = LAYER_NAME + "_bayesian_model.h5"
+PICKLE_PATH = LAYER_NAME + '_hist.pkl'
+DATA_PATH = '../data/'
+
+print("-" * 30)
+print("Constructing model...")
+print("-" * 30)
+mirrored_strategy = tf.distribute.MirroredStrategy()
+
+spec = importlib.util.spec_from_file_location(LAYER_NAME + "_model", LAYER_NAME + "_model.py")
+ModelLoader = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(ModelLoader)
+
+with mirrored_strategy.scope():
+    model = ModelLoader.make_model()
+
+print('Model summary:')
+print(model.summary())
+
+print('Model losses:')
+print(model.losses)
+
+print("-" * 30)
+print("Loading training and testing data...")
+print("-" * 30)
+
+Xy_train = tf.data.Dataset.zip((tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'imgs_train.npy')),
+                                tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'msks_train.npy')))).cache().batch(BATCH_SIZE).prefetch(8)
+Xy_test = tf.data.Dataset.zip((tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'imgs_test.npy')),
+                                tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'msks_test.npy')))).cache().batch(BATCH_SIZE).prefetch(8)
+
+
+print("-" * 30)
+print("Fitting model with training data ...")
+print("-" * 30)
+
+print("Training the model started at {}".format(datetime.datetime.now()))
+start_time = time.time()
+
+#Train the model
+history = model.fit(Xy_train,
+          validation_data=Xy_test,
+          epochs=EPOCHS, verbose=VERBOSE)
+
+print("Total time elapsed for training = {} seconds".format(time.time() - start_time))
+print("Training finished at {}".format(datetime.datetime.now()))
+
+
+# Save the model
+# serialize weights to HDF5
+model.save_weights(MODEL_PATH)
+print("Saved model to disk (.h5)")
+
+#Save training history
+history_dict = history.history
+with open(PICKLE_PATH, 'wb') as file_pi:
+        pickle.dump(history_dict, file_pi)
+print('Pickled training history')
