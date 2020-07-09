@@ -30,9 +30,10 @@ VERBOSE = 2
 
 ROOT_PATH = git.Repo("", search_parent_directories=True).git.rev_parse("--show-toplevel")
 DATA_PATH = ROOT_PATH + "/data/"
-SAVE_PATH = ROOT_PATH + "/" + LAYER_NAME + "/" + LAYER_NAME + "_bayesian_model.h5"
-PICKLE_PATH = ROOT_PATH + "/" + LAYER_NAME + "/" + LAYER_NAME + '_hist.pkl'
-MODEL_PATH = ROOT_PATH + "/" + LAYER_NAME + "/" + LAYER_NAME + "_model"
+LAYER_PATH = ROOT_PATH + "/layers/" + LAYER_NAME + "/"
+SAVE_PATH = LAYER_PATH + LAYER_NAME + "_bayesian_model.h5"
+PICKLE_PATH = LAYER_PATH + LAYER_NAME + '_hist.pkl'
+MODEL_PATH = LAYER_PATH + LAYER_NAME + "_model"
 
 print("-" * 30)
 print("Constructing model...")
