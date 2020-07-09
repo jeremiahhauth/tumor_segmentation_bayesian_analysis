@@ -82,7 +82,7 @@ print("Training finished at {}".format(datetime.datetime.now()))
 
 # Save the model
 # serialize weights to HDF5
-model.save_weights(MODEL_PATH)
+model.save_weights(SAVE_PATH)
 print("Saved model to disk (.h5)")
 
 #Save training history
