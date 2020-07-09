@@ -49,4 +49,4 @@ Plots of predictions with mean, standard deviation, and percentiles are stores a
 ### Model Architecture
 Below is a diagram of the U-NET architecture with all deterministic layers.
 
-<img src="https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/blob/master/images/deterministic_model.png" width="600" class="center">
+<img src="https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/blob/master/images/deterministic_model.png" width="1000" class="center">
