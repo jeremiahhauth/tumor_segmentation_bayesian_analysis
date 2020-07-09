@@ -74,13 +74,13 @@ def make_model():
     downsample_4 = keras.layers.MaxPool2D(name='downsample_4')(encoder_4_b)
 
 
-    encoder_5_a = keras.layers.Conv2D(FILTERS*16, name='encoder_5_a', **params)(downsample_4)
+    encoder_5_a = tfp.layers.Convolution2DFlipout(FILTERS*16, name='encoder_5_a', **flipout_params)(downsample_4)
     encoder_5_b = keras.layers.Conv2D(FILTERS*16, name='encoder_5_b', **params)(encoder_5_a)
 
 
     upsample_4 = keras.layers.UpSampling2D(name='upsample_4', size=(2, 2), interpolation="bilinear")(encoder_5_b)
     concat_4 = keras.layers.concatenate([upsample_4, encoder_4_b], name='concat_4')
-    decoder_4_a = tfp.layers.Convolution2DFlipout(FILTERS*8, name='decoder_4_a', **flipout_params)(concat_4)
+    decoder_4_a = keras.layers.Conv2D(FILTERS*8, name='decoder_4_a', **params)(concat_4)
     decoder_4_b = keras.layers.Conv2D(FILTERS*8, name='decoder_4_b', **params)(decoder_4_a)
 
 

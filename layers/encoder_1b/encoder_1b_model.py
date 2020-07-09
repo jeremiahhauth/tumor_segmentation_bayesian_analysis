@@ -58,7 +58,7 @@ def make_model():
     input_layer = keras.layers.Input(shape=(144, 144, 4), name="input_layer")
 
     encoder_1_a = keras.layers.Conv2D(FILTERS, name='encoder_1_a', **params)(input_layer)
-    encoder_1_b = keras.layers.Conv2D(FILTERS, name='encoder_1_b', **params)(encoder_1_a)
+    encoder_1_b = tfp.layers.Convolution2DFlipout(FILTERS, name='encoder_1_b', **flipout_params)(encoder_1_a)
     downsample_1 = keras.layers.MaxPool2D(name='downsample_1')(encoder_1_b)
 
     encoder_2_a = keras.layers.Conv2D(FILTERS*2, name='encoder_2_a', **params)(downsample_1)
@@ -80,7 +80,7 @@ def make_model():
 
     upsample_4 = keras.layers.UpSampling2D(name='upsample_4', size=(2, 2), interpolation="bilinear")(encoder_5_b)
     concat_4 = keras.layers.concatenate([upsample_4, encoder_4_b], name='concat_4')
-    decoder_4_a = tfp.layers.Convolution2DFlipout(FILTERS*8, name='decoder_4_a', **flipout_params)(concat_4)
+    decoder_4_a = keras.layers.Conv2D(FILTERS*8, name='decoder_4_a', **params)(concat_4)
     decoder_4_b = keras.layers.Conv2D(FILTERS*8, name='decoder_4_b', **params)(decoder_4_a)
 
 
