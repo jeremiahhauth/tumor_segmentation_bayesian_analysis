@@ -5,7 +5,7 @@ Conducting Bayesian inference on various subsets of parameters in the U-NET arch
 Models are trained by doing Flipout MFVI on each trainable layer. Trainable layers follow the following naming scheme (assigned to environment variable `LAYER_NAME`):
 
 - [`encoder_1a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1a)
-- `encoder_1b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1b)
+- [`encoder_1b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1b)
 - `encoder_2a`
 - `encoder_2b`
 - `encoder_3a`
