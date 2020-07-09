@@ -15,10 +15,10 @@ import matplotlib.pyplot as plt
 import pickle
 import os
 import sys
+import git
 import importlib.util
 
-
-LAYER_NAME = 'layer_1a'
+LAYER_NAME = os.getenv('LAYER_NAME')
 
 FILTERS = 32
 DATA_SIZE = 60000
@@ -29,16 +29,19 @@ BATCH_SIZE = 128
 EPOCHS = 200
 VERBOSE = 2
 
-MODEL_PATH = LAYER_NAME + "_bayesian_model.h5"
-PICKLE_PATH = LAYER_NAME + '_hist.pkl'
-DATA_PATH = '../data/'
+ROOT_PATH = git.Repo("", search_parent_directories=True).git.rev_parse("--show-toplevel")
+DATA_PATH = ROOT_PATH + "/data/"
+LAYER_PATH = ROOT_PATH + "/layers/" + LAYER_NAME + "/"
+SAVE_PATH = LAYER_PATH + LAYER_NAME + "_bayesian_model.h5"
+PICKLE_PATH = LAYER_PATH + LAYER_NAME + '_hist.pkl'
+MODEL_PATH = LAYER_PATH + LAYER_NAME + "_model"
 
 print("-" * 30)
 print("Constructing model...")
 print("-" * 30)
 mirrored_strategy = tf.distribute.MirroredStrategy()
 
-spec = importlib.util.spec_from_file_location(LAYER_NAME + "_model", LAYER_NAME + "_model.py")
+spec = importlib.util.spec_from_file_location(MODEL_PATH, MODEL_PATH + ".py")
 ModelLoader = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ModelLoader)
 
@@ -79,7 +82,7 @@ print("Training finished at {}".format(datetime.datetime.now()))
 
 # Save the model
 # serialize weights to HDF5
-model.save_weights(MODEL_PATH)
+model.save_weights(SAVE_PATH)
 print("Saved model to disk (.h5)")
 
 #Save training history
