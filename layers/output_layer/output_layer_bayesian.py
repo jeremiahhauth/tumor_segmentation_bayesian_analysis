@@ -16,6 +16,7 @@ import pickle
 import os
 import sys
 import importlib.util
+import git
 
 LAYER_NAME = os.getenv('LAYER_NAME')
 

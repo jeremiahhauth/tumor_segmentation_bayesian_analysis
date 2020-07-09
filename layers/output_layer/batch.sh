@@ -14,7 +14,7 @@
 
 
 
-#SBATCH --output=/home/%u/tumor_segmentation_bayesian_analysis/output_layer/%x-%j.log
+#SBATCH --output=%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
 export LAYER_NAME="output_layer"
