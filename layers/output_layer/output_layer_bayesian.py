@@ -26,7 +26,7 @@ PRIOR_MU = 0
 PRIOR_SIGMA = 10
 
 BATCH_SIZE = 128
-EPOCHS = 200
+EPOCHS = 600
 VERBOSE = 2
 
 ROOT_PATH = git.Repo("", search_parent_directories=True).git.rev_parse("--show-toplevel")
