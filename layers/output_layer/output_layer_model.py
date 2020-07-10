@@ -116,7 +116,7 @@ def make_model():
             layer.add_loss(KLDivergence(layer.kernel_posterior, layer.kernel_prior).call)
             layer.add_loss(KLDivergence(layer.bias_posterior, layer.bias_prior).call)
 
-    model.compile(optimizer=keras.optimizers.Nadam(learning_rate=1e-4),
+    model.compile(optimizer=keras.optimizers.Nadam(learning_rate=5e-5),
                   loss=likelihood_loss,
                   metrics=[likelihood_loss, mean_binary_crossentropy],
                   )
