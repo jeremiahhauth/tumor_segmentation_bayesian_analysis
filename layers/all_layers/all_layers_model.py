@@ -24,11 +24,13 @@ def make_model():
               untransformed_scale_initializer=tf.random_normal_initializer(
                   mean=np.log(np.exp(PRIOR_SIGMA/50.) - 1), stddev=0.05))
 
-    prior_fn = tfp.layers.default_mean_field_normal_fn(
-                      loc_initializer=tf.random_normal_initializer(
-                          mean=PRIOR_MU, stddev=0.0),
-                      untransformed_scale_initializer=tf.random_normal_initializer(
-                          mean=np.log(np.exp(PRIOR_SIGMA) - 1), stddev=0))
+    def prior_fn(dtype, shape, name, trainable, add_variable_fn):
+        dist = tfp.distributions.Normal(loc=PRIOR_MU*tf.ones(shape, dtype), 
+                                 scale=PRIOR_SIGMA*tf.ones(shape, dtype))
+        multivar_dist = tfp.distributions.Independent(dist, reinterpreted_batch_ndims=tf.size(dist.batch_shape_tensor()))
+
+        return multivar_dist
+
 
     flipout_params = dict(kernel_size=(3, 3), activation="relu", padding="same",
                   kernel_prior_fn=prior_fn,
