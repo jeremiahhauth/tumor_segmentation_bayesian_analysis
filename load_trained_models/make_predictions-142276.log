@@ -1,0 +1,146 @@
+LAYER_NAME: make_predictions
+2020-07-14 10:20:59.992225: I tensorflow_io/core/kernels/cpu_check.cc:128] Your CPU supports instructions that this TensorFlow IO binary was not compiled to use: AVX2 AVX512F FMA
+2020-07-14 10:21:12.411159: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-07-14 10:21:12.465795: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties: 
+pciBusID: 0000:1d:00.0 name: GeForce RTX 2080 Ti computeCapability: 7.5
+coreClock: 1.545GHz coreCount: 68 deviceMemorySize: 10.73GiB deviceMemoryBandwidth: 573.69GiB/s
+2020-07-14 10:21:12.543877: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.1
+2020-07-14 10:21:12.958208: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
+2020-07-14 10:21:13.320506: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10
+2020-07-14 10:21:13.599773: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10
+2020-07-14 10:21:14.065188: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10
+2020-07-14 10:21:14.344426: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10
+2020-07-14 10:21:15.649745: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-14 10:21:15.653992: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0
+2020-07-14 10:21:24.553342: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-07-14 10:21:24.574745: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2100000000 Hz
+2020-07-14 10:21:24.575500: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55ba07d0e880 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-07-14 10:21:24.575525: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-07-14 10:21:24.731079: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55ba07d787c0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2020-07-14 10:21:24.731114: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce RTX 2080 Ti, Compute Capability 7.5
+2020-07-14 10:21:24.734844: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties: 
+pciBusID: 0000:1d:00.0 name: GeForce RTX 2080 Ti computeCapability: 7.5
+coreClock: 1.545GHz coreCount: 68 deviceMemorySize: 10.73GiB deviceMemoryBandwidth: 573.69GiB/s
+2020-07-14 10:21:24.734894: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.1
+2020-07-14 10:21:24.734907: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
+2020-07-14 10:21:24.734919: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10
+2020-07-14 10:21:24.734930: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10
+2020-07-14 10:21:24.734941: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10
+2020-07-14 10:21:24.734953: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10
+2020-07-14 10:21:24.734965: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-07-14 10:21:24.739039: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0
+2020-07-14 10:21:24.739083: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.1
+2020-07-14 10:21:24.741527: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1102] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-07-14 10:21:24.741541: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1108]      0 
+2020-07-14 10:21:24.741550: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] 0:   N 
+2020-07-14 10:21:24.746164: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1247] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10176 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080 Ti, pci bus id: 0000:1d:00.0, compute capability: 7.5)
+WARNING:tensorflow:From /home/hauthj/.conda/envs/gpu-env/lib/python3.8/site-packages/tensorflow_probability/python/layers/util.py:99: Layer.add_variable (from tensorflow.python.keras.engine.base_layer) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.add_weight` method instead.
+Tensorflow Version:
+2.2.0
+
+Tensorflow-Probability Version:
+0.10.0
+
+Listing all GPU resources:
+[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+
+------------------------------
+Constructing model...
+------------------------------
+
+Input size: (None, 144, 144, 4)
+Output size: (None, 144, 144, 1)
+Model: "model_encoder_5b"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_layer (InputLayer)        [(None, 144, 144, 4) 0                                            
+__________________________________________________________________________________________________
+encoder_1_a (Conv2D)            (None, 144, 144, 32) 1184        input_layer[0][0]                
+__________________________________________________________________________________________________
+encoder_1_b (Conv2D)            (None, 144, 144, 32) 9248        encoder_1_a[0][0]                
+__________________________________________________________________________________________________
+downsample_1 (MaxPooling2D)     (None, 72, 72, 32)   0           encoder_1_b[0][0]                
+__________________________________________________________________________________________________
+encoder_2_a (Conv2D)            (None, 72, 72, 64)   18496       downsample_1[0][0]               
+__________________________________________________________________________________________________
+encoder_2_b (Conv2D)            (None, 72, 72, 64)   36928       encoder_2_a[0][0]                
+__________________________________________________________________________________________________
+downsample_2 (MaxPooling2D)     (None, 36, 36, 64)   0           encoder_2_b[0][0]                
+__________________________________________________________________________________________________
+encoder_3_a (Conv2D)            (None, 36, 36, 128)  73856       downsample_2[0][0]               
+__________________________________________________________________________________________________
+encoder_3_b (Conv2D)            (None, 36, 36, 128)  147584      encoder_3_a[0][0]                
+__________________________________________________________________________________________________
+downsample_3 (MaxPooling2D)     (None, 18, 18, 128)  0           encoder_3_b[0][0]                
+__________________________________________________________________________________________________
+encoder_4_a (Conv2D)            (None, 18, 18, 256)  295168      downsample_3[0][0]               
+__________________________________________________________________________________________________
+encoder_4_b (Conv2D)            (None, 18, 18, 256)  590080      encoder_4_a[0][0]                
+__________________________________________________________________________________________________
+downsample_4 (MaxPooling2D)     (None, 9, 9, 256)    0           encoder_4_b[0][0]                
+__________________________________________________________________________________________________
+encoder_5_a (Conv2D)            (None, 9, 9, 512)    1180160     downsample_4[0][0]               
+__________________________________________________________________________________________________
+encoder_5_b (Conv2DFlipout)     (None, 9, 9, 512)    9439232     encoder_5_a[0][0]                
+__________________________________________________________________________________________________
+upsample_4 (UpSampling2D)       (None, 18, 18, 512)  0           encoder_5_b[0][0]                
+__________________________________________________________________________________________________
+concat_4 (Concatenate)          (None, 18, 18, 768)  0           upsample_4[0][0]                 
+                                                                 encoder_4_b[0][0]                
+__________________________________________________________________________________________________
+decoder_4_a (Conv2D)            (None, 18, 18, 256)  1769728     concat_4[0][0]                   
+__________________________________________________________________________________________________
+decoder_4_b (Conv2D)            (None, 18, 18, 256)  590080      decoder_4_a[0][0]                
+__________________________________________________________________________________________________
+upsample_3 (UpSampling2D)       (None, 36, 36, 256)  0           decoder_4_b[0][0]                
+__________________________________________________________________________________________________
+concat_3 (Concatenate)          (None, 36, 36, 384)  0           upsample_3[0][0]                 
+                                                                 encoder_3_b[0][0]                
+__________________________________________________________________________________________________
+decoder_3_a (Conv2D)            (None, 36, 36, 128)  442496      concat_3[0][0]                   
+__________________________________________________________________________________________________
+decoder_3_b (Conv2D)            (None, 36, 36, 128)  147584      decoder_3_a[0][0]                
+__________________________________________________________________________________________________
+upsample_2 (UpSampling2D)       (None, 72, 72, 128)  0           decoder_3_b[0][0]                
+__________________________________________________________________________________________________
+concat_2 (Concatenate)          (None, 72, 72, 192)  0           upsample_2[0][0]                 
+                                                                 encoder_2_b[0][0]                
+__________________________________________________________________________________________________
+decoder_2_a (Conv2D)            (None, 72, 72, 64)   110656      concat_2[0][0]                   
+__________________________________________________________________________________________________
+decoder_2_b (Conv2D)            (None, 72, 72, 64)   36928       decoder_2_a[0][0]                
+__________________________________________________________________________________________________
+upsample_1 (UpSampling2D)       (None, 144, 144, 64) 0           decoder_2_b[0][0]                
+__________________________________________________________________________________________________
+concat_1 (Concatenate)          (None, 144, 144, 96) 0           upsample_1[0][0]                 
+                                                                 encoder_1_b[0][0]                
+__________________________________________________________________________________________________
+decoder_1_a (Conv2D)            (None, 144, 144, 32) 27680       concat_1[0][0]                   
+__________________________________________________________________________________________________
+decoder_1_b (Conv2D)            (None, 144, 144, 32) 9248        decoder_1_a[0][0]                
+__________________________________________________________________________________________________
+output_layer (Conv2D)           (None, 144, 144, 1)  33          decoder_1_b[0][0]                
+==================================================================================================
+Total params: 14,926,369
+Trainable params: 14,926,369
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+Traceback (most recent call last):
+  File "./make_predictions.py", line 79, in <module>
+    model.load_weights(SAVE_PATH)
+  File "/home/hauthj/.conda/envs/gpu-env/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 250, in load_weights
+    return super(Model, self).load_weights(filepath, by_name, skip_mismatch)
+  File "/home/hauthj/.conda/envs/gpu-env/lib/python3.8/site-packages/tensorflow/python/keras/engine/network.py", line 1259, in load_weights
+    with h5py.File(filepath, 'r') as f:
+  File "/home/hauthj/.conda/envs/gpu-env/lib/python3.8/site-packages/h5py/_hl/files.py", line 406, in __init__
+    fid = make_fid(name, mode, userblock_size,
+  File "/home/hauthj/.conda/envs/gpu-env/lib/python3.8/site-packages/h5py/_hl/files.py", line 173, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 88, in h5py.h5f.open
+OSError: Unable to open file (file signature not found)
