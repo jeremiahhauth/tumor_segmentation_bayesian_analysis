@@ -22,13 +22,13 @@ def make_model():
               loc_initializer=tf.random_normal_initializer(
                   mean=PRIOR_MU, stddev=0.05),
               untransformed_scale_initializer=tf.random_normal_initializer(
-                  mean=np.log(np.exp(PRIOR_SIGMA) - 1), stddev=0.05))
+                  mean=np.log(np.exp(PRIOR_SIGMA/10) - 1), stddev=0.05))
 
     prior_fn = tfp.layers.default_mean_field_normal_fn(
                       loc_initializer=tf.random_normal_initializer(
                           mean=PRIOR_MU, stddev=0.0),
                       untransformed_scale_initializer=tf.random_normal_initializer(
-                          mean=np.log(np.exp(PRIOR_SIGMA) - 1), stddev=0))
+                          mean=np.log(np.exp(0.05) - 1), stddev=0))
 
     flipout_params = dict(kernel_size=(3, 3), activation="relu", padding="same",
                   kernel_prior_fn=prior_fn,

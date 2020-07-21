@@ -14,7 +14,7 @@
 
 
 
-#SBATCH --output=$SLURM_SUBMIT_DIR/%x-%j.log
+#SBATCH --output=%x-%j.log
 
 # The application(s) to execute along with its input arguments and options:
 export LAYER_NAME="encoder_1a"

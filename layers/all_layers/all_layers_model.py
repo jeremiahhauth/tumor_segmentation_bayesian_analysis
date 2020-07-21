@@ -22,10 +22,10 @@ def make_model():
               loc_initializer=tf.random_normal_initializer(
                   mean=PRIOR_MU, stddev=0.05),
               untransformed_scale_initializer=tf.random_normal_initializer(
-                  mean=np.log(np.exp(PRIOR_SIGMA/50.) - 1), stddev=0.05))
+                  mean=np.log(np.exp(0.05) - 1), stddev=0.05))
 
     def prior_fn(dtype, shape, name, trainable, add_variable_fn):
-        dist = tfp.distributions.Normal(loc=PRIOR_MU*tf.ones(shape, dtype), 
+        dist = tfp.distributions.Normal(loc=PRIOR_MU*tf.ones(shape, dtype),
                                  scale=PRIOR_SIGMA*tf.ones(shape, dtype))
         multivar_dist = tfp.distributions.Independent(dist, reinterpreted_batch_ndims=tf.size(dist.batch_shape_tensor()))
 
@@ -55,7 +55,6 @@ def make_model():
     params = dict(kernel_size=(3, 3), activation="relu",
                   padding="same", data_format="channels_last",
                   kernel_initializer="he_uniform")
-
 
     input_layer = keras.layers.Input(shape=(144, 144, 4), name="input_layer")
 
@@ -118,7 +117,7 @@ def make_model():
             layer.add_loss(KLDivergence(layer.kernel_posterior, layer.kernel_prior).call)
             layer.add_loss(KLDivergence(layer.bias_posterior, layer.bias_prior).call)
 
-    model.compile(optimizer=keras.optimizers.Nadam(learning_rate=1e-4),
+    model.compile(optimizer=keras.optimizers.Nadam(learning_rate=5e-5),
                   loss=likelihood_loss,
                   metrics=[likelihood_loss, mean_binary_crossentropy],
                   )

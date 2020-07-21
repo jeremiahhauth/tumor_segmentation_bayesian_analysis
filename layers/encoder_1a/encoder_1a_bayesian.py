@@ -25,8 +25,8 @@ DATA_SIZE = 60000
 PRIOR_MU = 0
 PRIOR_SIGMA = 10
 
-BATCH_SIZE = 128
-EPOCHS = 200
+BATCH_SIZE = 256
+EPOCHS = 400
 VERBOSE = 2
 
 ROOT_PATH = git.Repo("", search_parent_directories=True).git.rev_parse("--show-toplevel")
@@ -59,9 +59,9 @@ print("Loading training and testing data...")
 print("-" * 30)
 
 Xy_train = tf.data.Dataset.zip((tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'imgs_train.npy')),
-                                tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'msks_train.npy')))).cache().batch(BATCH_SIZE).prefetch(8)
+                                tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'msks_train.npy')))).cache().batch(BATCH_SIZE).prefetch(2)
 Xy_test = tf.data.Dataset.zip((tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'imgs_test.npy')),
-                                tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'msks_test.npy')))).cache().batch(BATCH_SIZE).prefetch(8)
+                                tf.data.Dataset.from_tensor_slices(np.load(DATA_PATH + 'msks_test.npy')))).cache().batch(BATCH_SIZE).prefetch(2)
 
 
 print("-" * 30)
@@ -72,9 +72,17 @@ print("Training the model started at {}".format(datetime.datetime.now()))
 start_time = time.time()
 
 #Train the model
+model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath=SAVE_PATH,
+    save_weights_only=True,
+    monitor='val_loss',
+    mode='min',
+    save_best_only=True)
+
 history = model.fit(Xy_train,
           validation_data=Xy_test,
-          epochs=EPOCHS, verbose=VERBOSE)
+          epochs=EPOCHS, verbose=VERBOSE,
+          callbacks=[model_checkpoint_callback])
 
 print("Total time elapsed for training = {} seconds".format(time.time() - start_time))
 print("Training finished at {}".format(datetime.datetime.now()))
