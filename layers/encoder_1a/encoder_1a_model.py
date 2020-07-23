@@ -22,7 +22,7 @@ def make_model():
               loc_initializer=tf.random_normal_initializer(
                   mean=PRIOR_MU, stddev=0.05),
               untransformed_scale_initializer=tf.random_normal_initializer(
-                  mean=np.log(np.exp(PRIOR_SIGMA/10) - 1), stddev=0.05))
+                  mean=np.log(np.exp(0.001) - 1), stddev=0.05))
 
     prior_fn = tfp.layers.default_mean_field_normal_fn(
                       loc_initializer=tf.random_normal_initializer(
