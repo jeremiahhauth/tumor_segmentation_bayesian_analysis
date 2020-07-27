@@ -21,7 +21,7 @@ import importlib.util
 LAYER_NAME = os.getenv('LAYER_NAME')
 
 FILTERS = 32
-DATA_SIZE = 60000
+DATA_SIZE = 60000*144*144
 PRIOR_MU = 0
 PRIOR_SIGMA = 10
 

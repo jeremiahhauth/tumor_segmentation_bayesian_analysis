@@ -7,10 +7,10 @@
 #SBATCH --mail-user=hauthj@umich.edu
 #SBATCH --mail-type=END
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=32
+#SBATCH --ntasks-per-node=16
 #SBATCH --mem-per-cpu=7g
-#SBATCH --time=24:00:00
-#SBATCH --gpus=3
+#SBATCH --time=36:00:00
+#SBATCH --gpus=2
 
 
 
