@@ -49,7 +49,6 @@ def make_model():
                                 bias_divergence_fn=None)
 
     params_final = dict(kernel_size=(1, 1), activation="sigmoid", padding="same",
-                        data_format="channels_last",
                         kernel_initializer="he_uniform")
 
     params = dict(kernel_size=(3, 3), activation="relu",
@@ -102,8 +101,8 @@ def make_model():
     decoder_1_a = tfp.layers.Convolution2DFlipout(FILTERS, name='decoder_1_a', **flipout_params)(concat_1)
     decoder_1_b = tfp.layers.Convolution2DFlipout(FILTERS, name='decoder_1_b', **flipout_params)(decoder_1_a)
 
-    output_layer = tfp.layers.Convolution2DFlipout(name="output_layer",
-                                    filters=1, **flipout_params_final)(decoder_1_b)
+    output_layer = tf.keras.layers.Conv2D(name="output_layer",
+                                    filters=1, **params_final)(decoder_1_b)
 
     print()
     print('Input size:', input_layer.shape)
@@ -117,7 +116,7 @@ def make_model():
             layer.add_loss(KLDivergence(layer.kernel_posterior, layer.kernel_prior).call)
             layer.add_loss(KLDivergence(layer.bias_posterior, layer.bias_prior).call)
 
-    model.compile(optimizer=keras.optimizers.Nadam(learning_rate=5e-5),
+    model.compile(optimizer=keras.optimizers.Nadam(learning_rate=1e-4),
                   loss=likelihood_loss,
                   metrics=[likelihood_loss, mean_binary_crossentropy],
                   )

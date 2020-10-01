@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -A precisionhealth_project2
+#SBATCH -A precisionhealth_owned1
 #SBATCH -p precisionhealth
 
 #SBATCH --job-name=all_layers
@@ -9,10 +9,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --mem-per-cpu=7g
-#SBATCH --time=48:00:00
-#SBATCH --gpus=4
-
-
+#SBATCH --time=72:00:00
+#SBATCH --gpus=8
 
 #SBATCH --output=%x-%j.log
 
