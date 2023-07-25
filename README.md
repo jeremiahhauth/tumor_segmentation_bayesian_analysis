@@ -6,12 +6,18 @@ Models are trained by doing Flipout MFVI on each trainable layer. Trainable laye
 
 - [`encoder_1a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1a)
 - [`encoder_1b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1b)
-- `encoder_2a`
-- `encoder_2b`
-- `encoder_3a`
-- `encoder_3b`
-- `encoder_4a`
-- `encoder_4b`
+-
+[`encoder_2a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_2a)
+-
+[`encoder_2b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_2b)
+-
+[`encoder_3a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_3a)
+-
+[`encoder_3b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_3b)
+-
+[`encoder_4a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_4a)
+-
+[`encoder_4b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_4b)
 - [`encoder_5a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_5a)
 - [`encoder_5b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_5b)
 - [`decoder_4a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/decoder_4a)
