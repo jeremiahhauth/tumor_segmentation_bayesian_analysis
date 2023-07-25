@@ -4,23 +4,17 @@ Conducting Bayesian inference on various subsets of parameters in the U-NET arch
 ## [Layers](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/)
 Models are trained by doing Flipout MFVI on each trainable layer. Trainable layers follow the following naming scheme (assigned to environment variable `LAYER_NAME`):
 
-- [`encoder_1a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1a)
-- [`encoder_1b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1b)
--
-[`encoder_2a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_2a)
--
-[`encoder_2b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_2b)
--
-[`encoder_3a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_3a)
--
-[`encoder_3b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_3b)
--
-[`encoder_4a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_4a)
--
-[`encoder_4b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_4b)
-- [`encoder_5a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_5a)
-- [`encoder_5b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_5b)
-- [`decoder_4a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/decoder_4a)
+-[`encoder_1a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1a)
+-[`encoder_1b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_1b)
+-[`encoder_2a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_2a)
+-[`encoder_2b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_2b)
+-[`encoder_3a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_3a)
+-[`encoder_3b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_3b)
+-[`encoder_4a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_4a)
+-[`encoder_4b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_4b)
+-[`encoder_5a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_5a)
+-[`encoder_5b`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/encoder_5b)
+-[`decoder_4a`](https://github.com/jeremiahhauth/tumor_segmentation_bayesian_analysis/tree/master/layers/decoder_4a)
 - `decoder_4b`
 - `decoder_3a`
 - `decoder_3b`
